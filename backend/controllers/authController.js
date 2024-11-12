@@ -76,6 +76,7 @@ export const login = async (req, res) => {
                 name: user.name,
                 email: user.email,
                 address: user.address,
+                contact:user.contact,
                 profileImage: user.profileImage,
                 role:user.role
             };
@@ -207,6 +208,28 @@ export const setNewPassword=async(req,res)=>{
     }
     else{
         return res.status(500).send({"status":"failed","message":"something went wrong"});
+    }
+}
+
+export const updateUser=async(req,res)=>{
+    const {userId}=req.params;
+    const {data}=req.body;
+console.log("data",userId,data)
+    if(!userId){
+        return res.status(404).send({"status":"failed","message":"User id not found"});
+    }
+    if (!data || Object.keys(data).length === 0) {
+        return res.status(400).send({ status: "failed", message: "No data provided for update" });
+    }
+    try {
+        const user=await UserModel.findByIdAndUpdate(userId,{$set:data},{new:true});
+        console.log(user)
+        if(user){
+            return res.status(200).send({"status":"Success","message":"User Updated Successfully",user});
+        }
+        return res.status(404).send({"status":"failed","message":"User not found"})
+    } catch (error) {
+        return res.status(404).send({"status":"failed","message":"Something went wrong",error});
     }
 }
 

@@ -11,6 +11,9 @@ import ForgotPassword from './Pages/ForgotPassword';
 import SetNewPassword from './Pages/SetNewPassword';
 import ErrorPage from './Pages/ErrorPage';
 import { checkAuth } from './Redux/userSlice';
+import Profile from './Pages/Profile';
+import UpdateUser from './Pages/UpdateUser';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +30,7 @@ function App() {
   return (
     <BrowserRouter> {/* Ensure BrowserRouter is wrapping the entire app */}
       <Navbar />
+      <ToastContainer/>
       <Routes>
         {/* Public Routes */}
         <Route path='/login' element={<AuthRoute element={<Login />} />} />
@@ -37,6 +41,8 @@ function App() {
         {/* Protected Routes */}
         <Route element={<ProtectedRoutes />}>
           <Route path='/' element={<Home />} />
+          <Route path='/profile/:userId' element={<Profile />} />
+          <Route path='/updateUser/:userId' element={<UpdateUser/>} />
         </Route>
 
         <Route path='*' element={<ErrorPage />} />
