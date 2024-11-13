@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 const friendSchema = new mongoose.Schema({
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'UserModel',
+      ref: 'User',
       required: true,
     },
     requests: [

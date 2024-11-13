@@ -41,12 +41,6 @@ export const register = async (req, res) => {
                 });
                 await user.save();
 
-                const friendList=new Friends({
-                    userId:user._id,
-                    requests:[],
-                    friends:[]
-                });
-                await friendList.save();
 
                 return res.status(200).send({ "status": "Success", "message": "User Registered Successfully" });
             } else {

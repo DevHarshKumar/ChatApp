@@ -39,6 +39,7 @@ const Register = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
+      console.log(response,"response ststus:",response.status)
       if(response.status===200){
         notify();
         navigate('/');

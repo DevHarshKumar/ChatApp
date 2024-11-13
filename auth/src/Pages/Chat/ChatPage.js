@@ -40,9 +40,9 @@ const ChatPage = () => {
           <input
             type="text"
             placeholder="Type your message..."
-            className="p-3 w-full rounded-lg border border-gray-300"
+            className="p-3 w-full rounded-lg border border-gray-300 text-black"
           />
-          <button className="bg-blue-500 text-white p-3 rounded-lg ml-4">
+          <button className="bg-blue-700 text-white p-3 rounded-lg ml-4">
             Send
           </button>
         </div>

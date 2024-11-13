@@ -21,6 +21,8 @@ import Profile from './Pages/Profile';
 import UpdateUser from './Pages/UpdateUser';
 import { ToastContainer } from 'react-toastify';
 // Chat Imports
+import FileShare from './Pages/Chat/FileShare';
+import VideoChat from './Pages/Chat/VideoChat';
 import ChatPage from './Pages/Chat/ChatPage';
 
 function App() {
@@ -54,7 +56,9 @@ function App() {
         {/* Protected Routes */}
         <Route element={<ProtectedRoutes />}>
           <Route path='/' element={<Home />} />
-          <Route path='/chat' element={<ChatPage/>}/>
+          {/* <Route path='/chat' element={<ChatPage/>}/>
+          <Route path='/fileShare' element={<FileShare/>}/>
+          <Route path='/videoChat' element={<VideoChat/>}/> */}
           <Route path='/profile/:userId' element={<Profile />} />
           <Route path='/updateUser/:userId' element={<UpdateUser/>} />
         </Route>

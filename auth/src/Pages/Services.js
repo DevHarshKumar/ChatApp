@@ -6,6 +6,20 @@ const Services = () => {
 
   const {userId}=useSelector(state=>state.user)
   const navigate=useNavigate();
+
+  const handleNavigation=(e)=>{
+     e.stopPropagation();
+     userId ? navigate('/chat'):navigate('/login');
+  }
+  const handleVideoChat=(e)=>{
+    e.stopPropagation();
+    userId? navigate('/videoChat'):navigate('/login');
+  }
+  const handleFile=(e)=>{
+    e.stopPropagation();
+    userId? navigate('/fileShare'):navigate('/login');
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-500 to-indigo-500 text-white">
       {/* Hero Section */}
@@ -20,7 +34,7 @@ const Services = () => {
       <div className="container px-6 mx-auto mt-8 text-center md:text-left" >
         <div className="flex flex-wrap -mx-4">
           {/* Chat Service */}
-          <div className="w-full md:w-1/3 px-4 mb-8" onClick={userId? navigate('/chat'):navigate('/login')}>
+          <div className="w-full md:w-1/3 px-4 mb-8" onClick={(e)=>handleNavigation(e)}>
             <div className="bg-white rounded-lg shadow-lg p-8 text-gray-800">
               <h2 className="text-2xl font-bold mb-4">Instant Chat</h2>
               <p>
@@ -29,7 +43,7 @@ const Services = () => {
             </div>
           </div>
           {/* Video Chat Service */}
-          <div className="w-full md:w-1/3 px-4 mb-8">
+          <div className="w-full md:w-1/3 px-4 mb-8" onClick={(e)=>handleVideoChat(e)}>
             <div className="bg-white rounded-lg shadow-lg p-8 text-gray-800">
               <h2 className="text-2xl font-bold mb-4">Video Chat</h2>
               <p>
@@ -38,7 +52,7 @@ const Services = () => {
             </div>
           </div>
           {/* File Sharing Service */}
-          <div className="w-full md:w-1/3 px-4 mb-8">
+          <div className="w-full md:w-1/3 px-4 mb-8" onClick={(e)=>handleFile(e)}>
             <div className="bg-white rounded-lg shadow-lg p-8 text-gray-800">
               <h2 className="text-2xl font-bold mb-4">File Sharing</h2>
               <p>
