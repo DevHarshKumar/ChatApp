@@ -2,7 +2,11 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axiosInstance from '../utils/axios';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const notify = () => toast("User Registered Successfully");
 
 const registerSchema = Yup.object({
   name: Yup.string().required("Name is required"),
@@ -18,25 +22,33 @@ const registerSchema = Yup.object({
   address: Yup.string().required("Address is required"),
 });
 
-const handleSubmit = async(values) => {
-  const formdata = new FormData();
-  Object.keys(values).forEach((key) => {
-    formdata.append(key, values[key]);
-  });
 
-  try {
-    const response = await axiosInstance.post('/register', formdata, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 const Register = () => {
+  const navigate=useNavigate();
+
+  const handleSubmit = async(values) => {
+    const formdata = new FormData();
+    Object.keys(values).forEach((key) => {
+      formdata.append(key, values[key]);
+    });
+  
+    try {
+      const response = await axiosInstance.post('/register', formdata, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if(response.status===200){
+        notify();
+        navigate('/');
+      }
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-green-500 py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 bg-white p-8 pt-4 rounded-lg shadow-lg mt-8">
