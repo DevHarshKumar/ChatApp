@@ -1,0 +1,78 @@
+.chat-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, rgba(99, 84, 179, 1) 0%, rgba(57, 138, 179, 1) 100%);
+    color: white;
+  }
+  
+  .chat-header {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .chat-messages {
+    width: 100%;
+    max-width: 700px;
+    height: 30rem;
+    overflow-y: auto;
+    margin-bottom: 2rem;
+  }
+  
+  .chat-input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 700px;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 1rem;
+  }
+  
+  .send,
+  .clear {
+    background-color: #4c6ef5;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .send:hover,
+  .clear:hover {
+    background-color: #3a56e0;
+  }
+  
+  .file-name {
+    font-weight: bold;
+    color: #1d72b8;
+  }
+  
+  .message {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background-color: #f4f4f4;
+    border-radius: 0.5rem;
+  }
+  
+  .text-start {
+    text-align: left;
+  }
+  
+  .text-end {
+    text-align: right;
+  }
+  
+  .message-link {
+    color: #0077cc;
+    text-decoration: none;
+  }
+  
+  .message-link:hover {
+    text-decoration: underline;
+  }
+  

@@ -7,8 +7,8 @@ import { useParams } from 'react-router-dom';
 
 const SetNewPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [message,setMessage]=useState("");
-  const {userId,token}=useParams();
+  const [message, setMessage] = useState("");
+  const { userId, token } = useParams();
 
   const validationSchema = Yup.object({
     newPassword: Yup.string()
@@ -22,26 +22,23 @@ const SetNewPassword = () => {
 
   const handleSubmit = async (values) => {
     const { newPassword, confirmPassword } = values;
-    console.log(newPassword, confirmPassword);
     try {
-        const response=await axiosInstance.put(`/setNewPassword/${userId}/${token}`,{newPassword,confirmPassword});
-        if(response.data.status===200){
-            setMessage(response.data.message);
-        }
+      const response = await axiosInstance.put(`/setNewPassword/${userId}/${token}`, { newPassword, confirmPassword });
+      if (response.data.status === 200) {
+        setMessage(response.data.message);
+      }
     } catch (error) {
-        console.log(error)
-        const errorMessage = error.response?.data?.message || error.message || "An error occurred";
-
-        setMessage(errorMessage)
+      const errorMessage = error.response?.data?.message || error.message || "An error occurred";
+      setMessage(errorMessage);
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-green-500 text-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-lg shadow-lg">
-        <div>        <h5 className="text-3xl font-bold text-center text-gray-900">{message}</h5>
-        </div>
+        <h5 className="text-3xl font-bold text-center text-gray-900">{message}</h5>
         <h2 className="text-3xl font-bold text-center text-gray-900">Set New Password</h2>
+
         <Formik
           initialValues={{ newPassword: '', confirmPassword: '' }}
           validationSchema={validationSchema}
@@ -96,6 +93,7 @@ const SetNewPassword = () => {
             </Form>
           )}
         </Formik>
+
         <div className="text-center mt-4">
           <span className="text-sm text-gray-600">Remembered your password?</span>
           <NavLink

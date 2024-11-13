@@ -2,13 +2,12 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axiosInstance from '../utils/axios';
-import { NavLink,useParams,useNavigate} from 'react-router-dom';
+import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const notify = () => toast("Profile Updated Successfully");
-
 
 const updateUserSchema = Yup.object({
   name: Yup.string(),
@@ -21,46 +20,46 @@ const updateUserSchema = Yup.object({
   address: Yup.string(),
 });
 
-
-
 const UpdateUser = () => {
-    const {userId}=useParams();
-    const {user}=useSelector(state=>state.user)
-  const navigate=useNavigate();
+  const { userId } = useParams();
+  const { user } = useSelector(state => state.user);
+  const navigate = useNavigate();
 
-    const handleSubmit = async(values) => {
-        const data=values;
-        console.log("data",data)
-      try {
-        const response = await axiosInstance.put(`/updateUser/${userId}`, {data});
-        if(response.status===200){
-            notify();
-            setTimeout(()=>{
-               navigate(`/profile/${userId}`);
-            },3000);
-        }
-      } catch (error) {
-        console.error(error);
+  const handleSubmit = async (values) => {
+    const data = values;
+    try {
+      const response = await axiosInstance.put(`/updateUser/${userId}`, { data });
+      if (response.status === 200) {
+        notify();
+        setTimeout(() => {
+          navigate(`/profile/${userId}`);
+        }, 3000);
       }
-    };
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-green-500 py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold text-center text-gray-900">Update User</h2>
+
         <Formik
           initialValues={{
-            name: user? user.name : '',
-            email: user? user.email :'',
-            contact: user? user.contact :'',
-            address: user? user.address :'',
+            name: user ? user.name : '',
+            email: user ? user.email : '',
+            contact: user ? user.contact : '',
+            address: user ? user.address : '',
           }}
           validationSchema={updateUserSchema}
           onSubmit={handleSubmit}
         >
           {({ values, isSubmitting }) => (
-            <Form className="space-y-6">
-              <div>
+            <Form className="space-y-6 mt-6">
+              {/* Name */}
+              <div className="text-center">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                 <Field
                   type="text"
                   name="name"
@@ -72,7 +71,9 @@ const UpdateUser = () => {
                 <ErrorMessage name="name" component="div" className="text-red-500 text-xs mt-1" />
               </div>
 
-              <div>
+              {/* Email */}
+              <div className="text-center">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                 <Field
                   type="email"
                   name="email"
@@ -84,9 +85,9 @@ const UpdateUser = () => {
                 <ErrorMessage name="email" component="div" className="text-red-500 text-xs mt-1" />
               </div>
 
-             
-
-              <div>
+              {/* Contact */}
+              <div className="text-center">
+                <label htmlFor="contact" className="block text-sm font-medium text-gray-700">Contact</label>
                 <Field
                   type="text"
                   name="contact"
@@ -98,7 +99,9 @@ const UpdateUser = () => {
                 <ErrorMessage name="contact" component="div" className="text-red-500 text-xs mt-1" />
               </div>
 
-              <div>
+              {/* Address */}
+              <div className="text-center">
+                <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
                 <Field
                   type="text"
                   name="address"
@@ -110,6 +113,7 @@ const UpdateUser = () => {
                 <ErrorMessage name="address" component="div" className="text-red-500 text-xs mt-1" />
               </div>
 
+              {/* Submit Button */}
               <div>
                 <button
                   type="submit"
@@ -122,9 +126,11 @@ const UpdateUser = () => {
             </Form>
           )}
         </Formik>
+
+        {/* Link to Profile */}
         <div className="text-center mt-4">
-          <NavLink 
-            to="/profile" 
+          <NavLink
+            to={`/profile/${userId}`}
             className="text-indigo-600 font-medium hover:text-indigo-500 ml-2"
           >
             Go to Profile

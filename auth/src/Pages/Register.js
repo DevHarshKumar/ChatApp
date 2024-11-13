@@ -38,8 +38,8 @@ const handleSubmit = async(values) => {
 
 const Register = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-lg shadow-lg">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-green-500 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8 bg-white p-8 pt-4 rounded-lg shadow-lg mt-8">
         <h2 className="text-3xl font-bold text-center text-gray-900">Register</h2>
         <Formik
           initialValues={{
@@ -54,8 +54,9 @@ const Register = () => {
           onSubmit={handleSubmit}
         >
           {({ values, isSubmitting, setFieldValue }) => (
-            <Form className="space-y-6">
+            <Form className="space-y-6 mt-6">
               <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                 <Field
                   type="text"
                   name="name"
@@ -68,6 +69,7 @@ const Register = () => {
               </div>
 
               <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
                 <Field
                   type="email"
                   name="email"
@@ -80,6 +82,7 @@ const Register = () => {
               </div>
 
               <div className="relative">
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
                 <Field
                   type={values.password ? "password" : "text"} // Toggle password visibility
                   name="password"
@@ -101,8 +104,8 @@ const Register = () => {
                 <ErrorMessage name="password" component="div" className="text-red-500 text-xs mt-1" />
               </div>
 
-
               <div>
+                <label htmlFor="contact" className="block text-sm font-medium text-gray-700">Contact Number</label>
                 <Field
                   type="text"
                   name="contact"
@@ -115,6 +118,7 @@ const Register = () => {
               </div>
 
               <div>
+                <label htmlFor="address" className="block text-sm font-medium text-gray-700">Address</label>
                 <Field
                   type="text"
                   name="address"
@@ -127,6 +131,7 @@ const Register = () => {
               </div>
 
               <div>
+                <label htmlFor="profileImage" className="block text-sm font-medium text-gray-700">Profile Image</label>
                 <input
                   type="file"
                   name="profileImage"
@@ -152,6 +157,7 @@ const Register = () => {
             </Form>
           )}
         </Formik>
+
         <div className="text-center mt-4">
           <span className="text-sm text-gray-600">Already have an account?</span>
           <NavLink 
@@ -160,16 +166,17 @@ const Register = () => {
           >
             Login
           </NavLink>
-        </div> 
+        </div>
+
         <div className="text-center mt-2">
-        <NavLink 
+          <NavLink 
             to="/forgotPassword" 
             className="text-indigo-600 font-medium hover:text-indigo-500 ml-2"
           >
             Forgot Password?
           </NavLink>
         </div>
-             </div>
+      </div>
     </div>
   );
 };

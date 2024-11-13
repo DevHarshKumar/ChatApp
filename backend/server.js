@@ -1,6 +1,7 @@
 import express from 'express';
 const app=express();
 app.use(express.json())
+app.use('/UserData/userProfileImages', express.static('UserData/userProfileImages'));
 
 import cors from 'cors'
 app.use(cors({
@@ -21,9 +22,11 @@ app.use(morgan('dev'));
 
 //routes
 import userRoutes from './routes/userRoutes.js'
+import contactRoutes from './routes/contactRoute.js'
 
 //user Routes
 app.use('/',userRoutes);
+app.use('/',contactRoutes);
 
 connectDatabase();
 dotenv.config();

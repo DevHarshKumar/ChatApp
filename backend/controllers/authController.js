@@ -1,4 +1,5 @@
 import UserModel from "../models/User.js";
+import Friends from "../models/Friends.js";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import path from 'path';
@@ -38,8 +39,14 @@ export const register = async (req, res) => {
                     contact,
                     address,
                 });
-
                 await user.save();
+
+                const friendList=new Friends({
+                    userId:user._id,
+                    requests:[],
+                    friends:[]
+                });
+                await friendList.save();
 
                 return res.status(200).send({ "status": "Success", "message": "User Registered Successfully" });
             } else {
@@ -143,6 +150,7 @@ export const deleteUser=async(req,res)=>{
     }
     try {
         await UserModel.findByIdAndDelete(userId);
+        await Friends.deleteOne({userId:userId});
         return res.status(200).send({ status: "success", message: "User deleted successfully"});
     } catch (error) {
         return res.status(500).send({ status: "failed", message: "Server error", error});
@@ -234,3 +242,40 @@ console.log("data",userId,data)
 }
 
 
+export const initializeFriendsForUser = async (req, res) => {
+    const { userId } = req.params;
+    console.log(userId)
+    if(!userId){
+        return res.status(404).send({ status: 'failed', message: 'No user id' });
+
+    }
+    try {
+      const existingFriend = await Friends.findOne({ userId });
+      if (existingFriend) {
+        return res.status(200).send({
+          status: 'success',
+          message: 'Friends object already exists for this user',
+          friends: existingFriend,
+        });
+      }
+  
+      const friends = new Friends({
+        userId:userId,
+        requests: [],
+        friends: [],
+      });
+      console.log(friends)
+      await friends.save();
+  
+      return res.status(200).send({
+        status: 'success',
+        message: 'Friends object created successfully',
+        friends,
+      });
+    } catch (error) {
+      console.error("Error creating friends object:", error);
+      return res.status(500).send({ status: 'failed', message: 'Server error', error: error.message });
+    }
+  };
+  
+  
