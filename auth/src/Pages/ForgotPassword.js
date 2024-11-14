@@ -7,18 +7,23 @@ const ForgotPassword = () => {
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent form submission from reloading the page
+    e.preventDefault(); 
+    setMessage('')
     try {
       const response = await axiosInstance.post('/sendResetEmail', { email });
-      if (response.data.status === 200) {
-        setMessage(response.data.message);
+      if (response.status === 200) {
+        setMessage(response?.data.message);
         setTimeout(() => {
-          setMessage('');
+          setEmail('')
         }, 3000);
       }
     } catch (error) {
       console.log(error);
-      setMessage('An error occurred. Please try again.');
+      setMessage(error.response?.data?.message);
+      setTimeout(() => {
+        setEmail('')
+      }, 3000);
+      
     }
   };
 

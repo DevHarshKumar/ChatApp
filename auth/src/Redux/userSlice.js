@@ -15,11 +15,11 @@ const userSlice = createSlice({
   reducers: {
     login: (state, action) => {
       localStorage.setItem('user', JSON.stringify(action.payload.user));
-      localStorage.setItem('userId', action.payload.user.userId);
+      localStorage.setItem('userId', action.payload.user._id);
       localStorage.setItem('token', action.payload.token);
       localStorage.setItem('role', action.payload.role);
 
-      state.userId = action.payload.user.userId;
+      state.userId = action.payload.user._id;
       state.user = action.payload.user;
 
       if (action.payload.role === 'isAdmin') {
@@ -81,8 +81,12 @@ const userSlice = createSlice({
         state.userId = null;
       }
     },
+    updateUserProfileInfo:(state,action)=>{
+      state.user=action.payload;
+      localStorage.setItem('user',JSON.stringify(action.payload))
+    }
   }
 });
 
-export const { login, logout ,checkAuth} = userSlice.actions;
+export const { login, logout ,checkAuth,updateUserProfileInfo} = userSlice.actions;
 export default userSlice.reducer;

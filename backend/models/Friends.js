@@ -1,37 +1,64 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const friendSchema = new mongoose.Schema({
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
+  email: {
+    type: String,
+    required: true,
+    unique: true,
     },
-    requests: [
-      {
-        email: {
-            type: String,
-            required: true,
-          },
-          createdAt: {
-            type: Date,
-            default: Date.now,
-        },
+  requests: [
+    {
+      requestEmail: {
+        type: String,
+        required: true,
+      },
+      userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+      },
+      name:{
+        type:String,
+        required:true,
+      },
+      profileImage:{
+        type:String,
+        required:true,
       }
-    ],
-    friends: [
-      {
-        email: {
-          type: String,
-          required: true,
-        },
-        createdAt: {
-          type: Date,
-          default: Date.now,
-        },
-      }
-    ],
-  });
+      ,
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    }
+  ],
+  friends: [
+    {
+      requestEmail: {
+        type: String,
+        required: true,
+      },
+      userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+      },
+      name:{
+        type:String,
+        required:true,
+      },
+      profileImage:{
+        type:String,
+        required:true,
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    }
+  ],
+}, { timestamps: true }); 
 
-const Friends=mongoose.model('friends',friendSchema);
+friendSchema.index({ email: 1 }); 
+friendSchema.index({ 'requests.requestEmail': 1 }); 
+friendSchema.index({ 'friends.friendEmail': 1 }); 
+const Friends = mongoose.model('FriendList', friendSchema);
 export default Friends;
-  

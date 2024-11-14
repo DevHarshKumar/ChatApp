@@ -3,7 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axiosInstance from '../utils/axios';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { updateUserProfileInfo } from '../Redux/userSlice';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,12 +25,15 @@ const UpdateUser = () => {
   const { userId } = useParams();
   const { user } = useSelector(state => state.user);
   const navigate = useNavigate();
+  const dispatch=useDispatch();
 
   const handleSubmit = async (values) => {
     const data = values;
     try {
       const response = await axiosInstance.put(`/updateUser/${userId}`, { data });
       if (response.status === 200) {
+        console.log(response.data.user)
+        dispatch(updateUserProfileInfo(response.data.user))
         notify();
         setTimeout(() => {
           navigate(`/profile/${userId}`);

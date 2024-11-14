@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
         cb(null, './UserData/userProfileImages');
     },
     filename: (req, file, cb) => {
-        const name = req.body.name || req.body.formdata?.username || 'default';
+        const name = req.body.name || req.body.formdata?.name || 'default';
         const fileExtension = path.extname(file.originalname);
         const uniqueFilename = `${name}_profile_${Date.now()}${fileExtension}`;
         cb(null, uniqueFilename);
@@ -40,7 +40,13 @@ export const register = async (req, res) => {
                     address,
                 });
                 await user.save();
-
+                const newList = new Friends({
+                    email: email,
+                    friends: [],
+                    requests: [],
+                  });
+              
+                  await newList.save();
 
                 return res.status(200).send({ "status": "Success", "message": "User Registered Successfully" });
             } else {
@@ -73,7 +79,7 @@ export const login = async (req, res) => {
         console.log(isMatch)
         if (isMatch) {
             const userResponse = {
-                userId: user._id,
+                _id: user._id,
                 name: user.name,
                 email: user.email,
                 address: user.address,
@@ -182,6 +188,7 @@ export const sendResetEmail=async(req,res)=>{
                 console.log(error);
             } else {
                 console.log('Email sent: ' + info.response);
+                return res.status(200).send({"status":"success","message":"Email send Successfully"})
             }
         });
     }
@@ -224,9 +231,11 @@ console.log("data",userId,data)
         return res.status(400).send({ status: "failed", message: "No data provided for update" });
     }
     try {
-        const user=await UserModel.findByIdAndUpdate(userId,{$set:data},{new:true});
-        console.log(user)
+        const user=await UserModel.findByIdAndUpdate(userId,{$set:data},{new:true}).select('-password');
+       
+        
         if(user){
+            console.log(user)
             return res.status(200).send({"status":"Success","message":"User Updated Successfully",user});
         }
         return res.status(404).send({"status":"failed","message":"User not found"})
@@ -271,5 +280,48 @@ export const initializeFriendsForUser = async (req, res) => {
       return res.status(500).send({ status: 'failed', message: 'Server error', error: error.message });
     }
   };
-  
-  
+
+export const updateProfileImage = async (req, res) => {
+const { userId } = req.params;
+const profileImage = req.file;
+console.log(userId,profileImage)
+if (!profileImage) {
+    console.log("No file received");
+    return res.status(404).json({
+    status: "failed",
+    message: "Profile image upload failed. No file received.",
+    });
+}
+
+try {
+    console.log("Updating profile image for user:", userId);
+    const user = await UserModel.findByIdAndUpdate(
+    userId,
+    { $set: { profileImage: profileImage.path } },
+    { new: true }
+    ).select('-password');
+    user.userId=user._id;
+
+    if (user) {
+    console.log("Profile updated:", user);
+    res.status(200).json({
+        status: "success",
+        message: "Profile Image updated successfully",
+        user,
+    });
+    } else {
+    console.log("User not found");
+    res.status(400).json({
+        status: "failed",
+        message: "User not found or update unsuccessful",
+    });
+    }
+} catch (error) {
+    console.error("Error updating profile image:", error);
+    res.status(500).json({
+    status: "failed",
+    message: "Server error occurred while updating profile image",
+    });
+}
+};
+

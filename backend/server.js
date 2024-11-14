@@ -14,7 +14,6 @@ app.options('*', cors());
 import dotenv from 'dotenv'
 import connectDatabase from './config/connectDb.js';
 import morgan from 'morgan';
-app.use('/UserData', express.static('UserData/userProfileImages'));
 app.use(morgan('dev'));
 
 
@@ -23,10 +22,12 @@ app.use(morgan('dev'));
 //routes
 import userRoutes from './routes/userRoutes.js'
 import contactRoutes from './routes/contactRoute.js'
+import friendsRoutes from './routes/friendsRoutes.js'
 
 //user Routes
 app.use('/',userRoutes);
 app.use('/',contactRoutes);
+app.use('/',friendsRoutes);
 
 connectDatabase();
 dotenv.config();

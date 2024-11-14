@@ -1,8 +1,9 @@
 import express from 'express'
-import { register, upload ,login,getUserDetail,getAllUsers,deleteUser,updateUser,initializeFriendsForUser ,sendResetEmail,setNewPassword} from '../controllers/authController.js';
+import { register, upload ,login,getUserDetail,getAllUsers,deleteUser,updateProfileImage,updateUser,initializeFriendsForUser ,sendResetEmail,setNewPassword} from '../controllers/authController.js';
 const router=express.Router();
 
 router.post("/register",upload.single('profileImage'),register);
+router.put("/updateProfileImage/:userId", upload.single('profileImage'), updateProfileImage);
 router.post("/login",login);
 router.get("/getUser/:userId",getUserDetail);
 router.get("/allUsers",getAllUsers);
@@ -14,4 +15,4 @@ router.post("/createFriends/:userId",initializeFriendsForUser);
 
 
 
-export default router; 
+export default router;  

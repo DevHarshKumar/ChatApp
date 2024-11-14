@@ -4,20 +4,20 @@ import { useNavigate } from 'react-router';
 
 const Services = () => {
 
-  const {userId}=useSelector(state=>state.user)
+  const {user}=useSelector(state=>state.user)
   const navigate=useNavigate();
 
   const handleNavigation=(e)=>{
      e.stopPropagation();
-     userId ? navigate('/chat'):navigate('/login');
+     user ? navigate('/chat'):navigate('/login');
   }
   const handleVideoChat=(e)=>{
     e.stopPropagation();
-    userId? navigate('/videoChat'):navigate('/login');
+    user? navigate('/videoChat'):navigate('/login');
   }
   const handleFile=(e)=>{
     e.stopPropagation();
-    userId? navigate('/fileShare'):navigate('/login');
+    user? navigate('/fileShare'):navigate('/login');
   }
 
   return (

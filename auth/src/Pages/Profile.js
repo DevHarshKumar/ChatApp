@@ -1,9 +1,10 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const { user } = useSelector((state) => state.user);
+  const navigate=useNavigate();
   console.log("user", user);
   console.log(user.profileImage)
 
@@ -15,18 +16,28 @@ const Profile = () => {
     );
   }
 
+  const handleImageUpdate=()=>{
+    navigate('/updateProfileImage');
+  }
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-500 to-green-500 py-12 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-8 bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold text-center text-gray-900">Your Profile</h2>
 
         {/* Profile Image */}
-        <div className="flex justify-center mt-6">
+        <div className="relative flex justify-center mt-6">
           <img
-            src={`http://localhost:5000/${user.profileImage}`||'/boy.png'} // Default image if no profile image is available
+            src={`http://localhost:5000/${user.profileImage}` || '/boy.png'} // Default image if no profile image is available
             alt="Profile"
             className="w-32 h-32 rounded-full object-cover border-4 border-indigo-600"
           />
+          <button
+            onClick={handleImageUpdate}
+            className="absolute bottom-2 right-2 bg-indigo-600 text-white py-1 px-2 text-xs rounded-full hover:bg-indigo-700 transition-colors duration-200"
+          >
+            Update Image
+          </button>
         </div>
 
         {/* Profile Info */}
@@ -65,7 +76,7 @@ const Profile = () => {
         {/* Edit Profile Link */}
         <div className="text-center mt-8">
           <NavLink
-            to={`/updateUser/${user.userId}`}
+            to={`/updateUser/${user._id}`}
             className="inline-block text-indigo-600 font-medium hover:text-indigo-500"
           >
             <button className="bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors duration-200">

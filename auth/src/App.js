@@ -18,9 +18,12 @@ import DefaultHomePage from './Pages/DefaultHomePage';
 import Footer from './Components/Footer';
 import { checkAuth } from './Redux/userSlice';
 import Profile from './Pages/Profile';
+import UpdateProfileImage from './Pages/UpdateProfileImage';
 import UpdateUser from './Pages/UpdateUser';
 import { ToastContainer } from 'react-toastify';
 // Chat Imports
+import SendFriendRequest from './Pages/Chat/SendFriendRequest';
+import FriendList from './Pages/Chat/FriendList';
 import FileShare from './Pages/Chat/FileShare';
 import VideoChat from './Pages/Chat/VideoChat';
 import ChatPage from './Pages/Chat/ChatPage';
@@ -59,6 +62,9 @@ function App() {
           {/* <Route path='/chat' element={<ChatPage/>}/>
           <Route path='/fileShare' element={<FileShare/>}/>
           <Route path='/videoChat' element={<VideoChat/>}/> */}
+          <Route path='/friendList' element={<FriendList/>}/>
+          <Route path='sendFriendRequest' element={<SendFriendRequest/>}/>
+          <Route path='/updateProfileImage' element={<UpdateProfileImage/>}/>
           <Route path='/profile/:userId' element={<Profile />} />
           <Route path='/updateUser/:userId' element={<UpdateUser/>} />
         </Route>
