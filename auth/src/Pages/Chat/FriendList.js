@@ -45,6 +45,10 @@ const filteredFriendRequests = friendRequests?.filter((request) =>
 
 console.log("filtered requests",filteredFriendRequests)
 
+const handleChat=({e,email})=>{
+  e.stopPropagation();
+  navigate(`/chat/${email}`)
+}
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-500 to-green-500 flex justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
@@ -74,7 +78,7 @@ console.log("filtered requests",filteredFriendRequests)
             {filteredFriendsList.length > 0 ? (
               <ul>
                 {filteredFriendsList.map((friend) => (
-                  <li key={friend.userId} className="flex items-center space-x-3 border-b py-2">
+                  <li key={friend.userId} className="flex items-center space-x-3 border-b py-2" onClick={(e)=>handleChat({e,email:friend.requestEmail})}>
                     <img
                       src={`http://localhost:5000/${friend.profileImage}` || '/default-profile.png'}
                       alt="Profile"

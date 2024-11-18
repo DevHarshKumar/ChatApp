@@ -4,12 +4,7 @@ app.use(express.json())
 app.use('/UserData/userProfileImages', express.static('UserData/userProfileImages'));
 
 import cors from 'cors'
-app.use(cors({
-  origin: 'http://localhost:3000', // Specify your frontend's origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-  credentials: true, // Include credentials if needed (cookies, etc.)
-}));
+app.use(cors());
 app.options('*', cors());
 import dotenv from 'dotenv'
 import connectDatabase from './config/connectDb.js';
@@ -23,11 +18,13 @@ app.use(morgan('dev'));
 import userRoutes from './routes/userRoutes.js'
 import contactRoutes from './routes/contactRoute.js'
 import friendsRoutes from './routes/friendsRoutes.js'
+import messageRoutes from './routes/messageRoutes.js'
 
 //user Routes
 app.use('/',userRoutes);
 app.use('/',contactRoutes);
 app.use('/',friendsRoutes);
+app.use('/',messageRoutes);
 
 connectDatabase();
 dotenv.config();

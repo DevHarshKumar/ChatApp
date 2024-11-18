@@ -59,9 +59,9 @@ function App() {
         {/* Protected Routes */}
         <Route element={<ProtectedRoutes />}>
           <Route path='/' element={<Home />} />
-          {/* <Route path='/chat' element={<ChatPage/>}/>
+          <Route path='/chat/:email' element={<ChatPage/>}/>
           <Route path='/fileShare' element={<FileShare/>}/>
-          <Route path='/videoChat' element={<VideoChat/>}/> */}
+          <Route path='/videoChat' element={<VideoChat/>}/> 
           <Route path='/friendList' element={<FriendList/>}/>
           <Route path='sendFriendRequest' element={<SendFriendRequest/>}/>
           <Route path='/updateProfileImage' element={<UpdateProfileImage/>}/>
